@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Clipboard</title>
+	</head>
+	<body>
+		<h1>About us</h1>
+		<iframe id="plugin" src="./test-iframe.html"></iframe>
+	</body>
+	<script>
+		const pluginIframe = document.querySelector("#plugin")
+
+		window.addEventListener("copy", () => {
+			pluginIframe.focus()
+		})
+	</script>
+</html>
