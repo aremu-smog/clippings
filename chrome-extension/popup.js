@@ -5,14 +5,23 @@ window.addEventListener("focus", async () => {
 	await triggerOnAction()
 })
 
+const truncateText = text => {
+	return text.substring(0, 100)
+}
 const populateClipboarDiv = async () => {
 	const clipboardHistory = await getClipboardHistory()
-	let htmlTemplate = "<ol>"
-	await clipboardHistory.reverse().forEach(item => {
-		htmlTemplate += `<li>${item}</li>`
-	})
+	let htmlTemplate = "<ul class='order-history-list'>"
+	await clipboardHistory
+		.filter(text => text.trim() !== "")
+		.reverse()
+		.forEach(item => {
+			htmlTemplate += `
+		<li data-full-text="${item}" class="order-history-list-item">
+		<button>${truncateText(item)}</button>
+		</li>`
+		})
 
-	htmlTemplate += "</ol>"
+	htmlTemplate += "</ul>"
 
 	clipboardDiv.innerHTML = htmlTemplate
 }
@@ -47,4 +56,35 @@ const triggerOnAction = async () => {
 	})
 
 	await populateClipboarDiv()
+
+	await makeItemsCopiable()
+}
+
+const makeItemsCopiable = async () => {
+	const allClippingsItem = document.querySelectorAll(".order-history-list-item")
+
+	for (const clippingItem of allClippingsItem) {
+		const contentToCopy = clippingItem.getAttribute("data-full-text")
+		const clippingItemButton = clippingItem.querySelector("button")
+
+		const copyContent = async () => {
+			try {
+				await navigator.clipboard.writeText(`${contentToCopy}`)
+				clippingItemButton.innerText = "Copied!"
+				setTimeout(() => {
+					clippingItemButton.innerText = truncateText(contentToCopy)
+				}, 1000)
+			} catch (e) {
+				console.warn("Unable to copy text to clipboard", e?.message)
+			}
+		}
+		clippingItem.addEventListener("keyup", async e => {
+			if (e.key === "Enter") {
+				await copyContent()
+			}
+		})
+		clippingItem.addEventListener("click", async e => {
+			await copyContent()
+		})
+	}
 }
