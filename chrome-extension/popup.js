@@ -1,29 +1,37 @@
 const clipboardDiv = document.querySelector("#clipboard")
-const clipbaordTextarea = document.querySelector("#clipboard-textarea")
+const clippingsHistoryList = document.querySelector("#clippings-history-list")
 
 window.addEventListener("focus", async () => {
 	await triggerOnAction()
 })
 
 const truncateText = text => {
-	return text.substring(0, 100)
+	const LENGTH_OF_STRING = 100
+	let truncatedText = text.substring(0, LENGTH_OF_STRING)
+	if (text.length > LENGTH_OF_STRING) {
+		truncatedText += "..."
+	}
+	return truncatedText
 }
 const populateClipboarDiv = async () => {
 	const clipboardHistory = await getClipboardHistory()
-	let htmlTemplate = "<ul class='order-history-list'>"
+
+	clippingsHistoryList.innerHTML = ""
 	await clipboardHistory
 		.filter(text => text.trim() !== "")
 		.reverse()
-		.forEach(item => {
-			htmlTemplate += `
-		<li data-full-text="${item}" class="order-history-list-item">
-		<button>${truncateText(item)}</button>
-		</li>`
+		.forEach(async item => {
+			const listItem = document.createElement("li")
+			listItem.setAttribute("data-full-text", item)
+			listItem.setAttribute("class", "order-history-list-item")
+			const listItemButton = document.createElement("button")
+			listItemButton.innerText = truncateText(item)
+
+			listItem.append(listItemButton)
+
+			clippingsHistoryList.append(listItem)
+			await makeClippingCopiable(listItem)
 		})
-
-	htmlTemplate += "</ul>"
-
-	clipboardDiv.innerHTML = htmlTemplate
 }
 
 const getClipboardHistory = async () => {
@@ -60,31 +68,27 @@ const triggerOnAction = async () => {
 	await makeItemsCopiable()
 }
 
-const makeItemsCopiable = async () => {
-	const allClippingsItem = document.querySelectorAll(".order-history-list-item")
+const makeClippingCopiable = async clippingItem => {
+	const contentToCopy = clippingItem.getAttribute("data-full-text")
+	const clippingItemButton = clippingItem.querySelector("button")
 
-	for (const clippingItem of allClippingsItem) {
-		const contentToCopy = clippingItem.getAttribute("data-full-text")
-		const clippingItemButton = clippingItem.querySelector("button")
-
-		const copyContent = async () => {
-			try {
-				await navigator.clipboard.writeText(`${contentToCopy}`)
-				clippingItemButton.innerText = "Copied!"
-				setTimeout(() => {
-					clippingItemButton.innerText = truncateText(contentToCopy)
-				}, 1000)
-			} catch (e) {
-				console.warn("Unable to copy text to clipboard", e?.message)
-			}
+	const copyContent = async () => {
+		try {
+			await navigator.clipboard.writeText(`${contentToCopy}`)
+			clippingItemButton.innerText = "Copied!"
+			setTimeout(() => {
+				clippingItemButton.innerText = truncateText(contentToCopy)
+			}, 1000)
+		} catch (e) {
+			console.warn("Unable to copy text to clipboard", e?.message)
 		}
-		clippingItem.addEventListener("keyup", async e => {
-			if (e.key === "Enter") {
-				await copyContent()
-			}
-		})
-		clippingItem.addEventListener("click", async e => {
-			await copyContent()
-		})
 	}
+	clippingItem.addEventListener("keyup", async e => {
+		if (e.key === "Enter") {
+			await copyContent()
+		}
+	})
+	clippingItem.addEventListener("click", async e => {
+		await copyContent()
+	})
 }

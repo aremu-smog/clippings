@@ -4,12 +4,31 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Clippings</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap"
+			rel="stylesheet"
+		/>
 		<link rel="stylesheet" href="./popup.css" />
 	</head>
 	<body>
 		<main>
-			<h1>Clippings</h1>
-			<div id="clipboard"></div>
+			<header class="header">
+				<img
+					src="./assets/clippings.svg"
+					class="header__logo"
+					alt="Clippings"
+				/>
+				<img
+					src="./assets/click-to-copy.svg"
+					class="header__instruction"
+					alt="Click to copy clippings"
+				/>
+			</header>
+			<div id="clipboard">
+				<ul class="clippings-history-list" id="clippings-history-list"></ul>
+			</div>
 		</main>
 	</body>
 	<script src="./popup.js"></script>

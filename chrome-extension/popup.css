@@ -1,45 +1,119 @@
 :root {
 	--green: #d6e8b1;
+	--deep-green: #a0b86e;
+	--blue: #201d47;
+	--grey: #fbfff2;
+
+	--list-width: 280px;
+}
+
+::-webkit-scrollbar {
+	width: 5px;
+	border-radius: 8px;
+}
+::-webkit-scrollbar-track {
+	background: #ececec;
+}
+::-webkit-scrollbar-thumb {
+	background: #888;
+	border-radius: 8px;
+}
+::-webkit-scrollbar-thumb:hover {
+	background: #888;
+}
+
+@font-face {
+	font-family: "Outfit";
+	src: url("./assets/fonts/Outfit-Regular.ttf");
+	font-weight: 400;
+	font-display: swap;
 }
 
 body {
 	border-radius: 12px;
 	outline: none;
+	font-size: 14px;
+	background-color: transparent;
+	padding: 8px;
+	font-family: "Outfit", sans-serif;
 }
 main {
-	max-width: 278px;
+	max-width: 320px;
 }
 
-.order-history-list {
+.header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding-bottom: 28px;
+	padding-top: 4px;
+}
+
+.header__logo {
+	display: inline-block;
+	width: 120px;
+}
+.header__instruction {
+	display: inline-block;
+	width: 90px;
+}
+.clippings-history-list {
 	list-style-position: outside;
 	list-style-type: none;
 	margin: 0 !important;
 	overflow-y: scroll;
-	max-height: 220px;
+	max-height: 300px;
 	padding-inline-start: 0px;
+	width: var(--list-width);
 }
 
 .order-history-list-item {
-	background-color: var(--green);
-	border-radius: 6px;
-	overflow: hidden;
-	margin-left: 0px;
-	margin-bottom: 5px;
+	background-color: var(--grey);
+	margin-bottom: 8px;
 	cursor: pointer;
-	width: 260px;
 	display: block;
+	width: calc(100% - 8px);
 	text-align: left;
+	position: relative;
+	padding-left: 2px;
+}
+
+.order-history-list-item:hover button::before,
+button:focus::before {
+	content: "";
+	display: block;
+	width: 2px;
+	background-color: var(--blue);
+	position: absolute;
+	top: 10px;
+	left: 1.5px;
+	height: calc(100% - 20px);
+	border-radius: 8px;
+	z-index: 10;
 }
 .order-history-list-item button {
-	background-color: var(--green);
+	background-color: transparent;
 	display: block;
 	word-break: break-all;
-	border: none;
 	padding: 10px;
+	border: none;
+	border: 1px solid var(--green);
 	height: 100%;
 	width: 100%;
 	text-align: left;
+	font-size: 12px;
 	cursor: pointer;
+	outline: none;
+	color: #4a4040;
+	border-radius: 6px;
+	font-family: "Outfit", sans-serif;
+}
+
+.order-history-list-item:hover button,
+.order-history-list-item button:focus {
+	background-color: var(--green);
+	color: #000000;
+	border-color: var(--deep-green);
 }
 .order-history-list-item:last-child {
 	margin-bottom: 0px;
