@@ -8,7 +8,7 @@
 }
 
 ::-webkit-scrollbar {
-	width: 5px;
+	width: 4px;
 	border-radius: 8px;
 }
 ::-webkit-scrollbar-track {
@@ -34,7 +34,7 @@ body {
 	outline: none;
 	font-size: 14px;
 	background-color: transparent;
-	padding: 8px;
+	padding: 0px 8px;
 	font-family: "Outfit", sans-serif;
 }
 main {
@@ -45,8 +45,8 @@ main {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
-	padding-bottom: 28px;
-	padding-top: 4px;
+	padding-bottom: 20px;
+	padding-top: 8px;
 }
 
 .header__logo {
@@ -55,7 +55,7 @@ main {
 }
 .header__instruction {
 	display: inline-block;
-	width: 90px;
+	width: 80px;
 }
 .clippings-history-list {
 	list-style-position: outside;
