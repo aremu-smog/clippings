@@ -1,6 +1,17 @@
 const clipboardDiv = document.querySelector("#clipboard")
 const clippingsHistoryList = document.querySelector("#clippings-history-list")
 
+const splashScreen = document.querySelector("#splash-screen")
+
+window.addEventListener("load", () => {
+	const contentContainer = splashScreen.querySelector(".content-container")
+
+	contentContainer.innerHTML = `<img src="./assets/clippings.svg" class="logo zoom-in" alt="Clippings" />`
+
+	setTimeout(() => {
+		contentContainer.innerHTML = `<p class="intro zoom-in"><b>seamlessly</b> access <br />all copied content</p>`
+	}, 2_000)
+})
 window.addEventListener("focus", async () => {
 	await triggerOnAction()
 })
@@ -64,8 +75,6 @@ const triggerOnAction = async () => {
 	})
 
 	await populateClipboarDiv()
-
-	await makeItemsCopiable()
 }
 
 const makeClippingCopiable = async clippingItem => {
