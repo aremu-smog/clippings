@@ -97,13 +97,14 @@ main {
 	top: calc(100% - 220px);
 }
 
-@media screen and (max-width: 820px) {
+@media only screen and (max-width: 1024px) {
 	.main-header__logo {
 		width: 200px;
 	}
 
 	.hero {
 		flex-direction: column;
+		text-align: center;
 	}
 	.hero__illustration {
 		width: 260px;
@@ -115,23 +116,37 @@ main {
 
 	.footer__pattern {
 		width: 1600px;
+		z-index: -1;
+		top: calc(100% - 120px);
 	}
 }
 
-@media screen and (max-width: 400px) {
+@media only screen and (max-width: 420px) {
 	.main-header__logo {
-		width: 120px;
+		width: 160px;
 	}
 
 	.hero__illustration {
-		width: 265px;
+		width: 260px;
 	}
 
 	.hero__title {
 		margin-block-start: 40px;
+		font-size: 24px;
+	}
+
+	.hero__button {
+		font-size: 12px;
+		padding: 10px 18px;
+		margin: auto;
+	}
+
+	.hero__button__icon {
+		width: 12px;
+		margin-right: 4px;
 	}
 
 	.footer__pattern {
-		top: calc(100% - 80px);
+		top: calc(100% - 140px);
 	}
 }
