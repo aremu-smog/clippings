@@ -105,6 +105,7 @@ main {
 	.hero {
 		flex-direction: column;
 		text-align: center;
+		padding-top: 12px;
 	}
 	.hero__illustration {
 		width: 260px;
@@ -124,10 +125,11 @@ main {
 @media only screen and (max-width: 420px) {
 	.main-header__logo {
 		width: 160px;
+		padding: 26px 0;
 	}
 
 	.hero__illustration {
-		width: 220px;
+		width: 200px;
 	}
 
 	.hero__title {
@@ -148,5 +150,6 @@ main {
 
 	.footer__pattern {
 		top: calc(100% - 140px);
+		width: 1400px;
 	}
 }
