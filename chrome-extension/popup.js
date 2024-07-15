@@ -1,9 +1,26 @@
 const clipboardDiv = document.querySelector("#clipboard")
 const clippingsHistoryList = document.querySelector("#clippings-history-list")
+const body = document.querySelector("body")
 
 const splashScreen = document.querySelector("#splash-screen")
 
-window.addEventListener("load", () => {
+window.addEventListener("load", async () => {
+	await handleSplashScreen()
+})
+
+const handleSplashScreen = async () => {
+	await chrome.storage.local.get(["has-seen-splash-screen"]).then(result => {
+		const hasResult = Object.keys(result).length > 0
+
+		if (hasResult) {
+			body.removeChild(splashScreen)
+		} else {
+			showSplashScreenAnimation()
+		}
+	})
+}
+
+const showSplashScreenAnimation = () => {
 	const contentContainer = splashScreen.querySelector(".content-container")
 
 	contentContainer.innerHTML = `<img src="./assets/clippings.svg" class="logo zoom-in" alt="Clippings" />`
@@ -11,7 +28,18 @@ window.addEventListener("load", () => {
 	setTimeout(() => {
 		contentContainer.innerHTML = `<p class="intro zoom-in"><b>seamlessly</b> access <br />all copied content</p>`
 	}, 2_000)
-})
+
+	setTimeout(async () => {
+		contentContainer.innerHTML = ""
+		splashScreen.style.opacity = 0
+
+		await chrome.storage.local
+			.set({ "has-seen-splash-screen": "true" })
+			.then(() => {
+				console.log("[has-seen-splash-screen]", "Set successfully")
+			})
+	}, 4_000)
+}
 window.addEventListener("focus", async () => {
 	await triggerOnAction()
 })
