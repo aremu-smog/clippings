@@ -1,5 +1,4 @@
 window.addEventListener("copy", async () => {
-	console.log("Something copied in the dom")
 	await triggerOnAction()
 })
 

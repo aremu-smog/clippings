@@ -18,15 +18,7 @@
 			"js": ["content-script.js"]
 		}
 	],
-	"host_permissions": ["<all_urls>"],
-	"permissions": [
-		"clipboardRead",
-		"tabs",
-		"commands",
-		"storage",
-		"scripting",
-		"activeTab"
-	],
+	"permissions": ["clipboardRead", "commands", "storage", "activeTab"],
 	"commands": {
 		"_execute_action": {
 			"suggested_key": {
