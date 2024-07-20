@@ -11,7 +11,6 @@ window.addEventListener("load", async () => {
 const handleSplashScreen = async () => {
 	await chrome.storage.local.get(["has-seen-splash-screen"]).then(result => {
 		const hasResult = Object.keys(result).length > 0
-
 		if (hasResult) {
 			body.removeChild(splashScreen)
 		} else {
